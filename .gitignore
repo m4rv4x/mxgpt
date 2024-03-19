@@ -21,5 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-config.json
+
+# sensible data
 servers.json
