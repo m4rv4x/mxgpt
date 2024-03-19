@@ -192,7 +192,6 @@ function App() {
                 <li className="nav-item">
                   <a className="navbar-brand" href="/">
                     <h1>mxGPT</h1>
-                    <h4>{backEndState}</h4>
                     <h4>@{backEndServer}:3001</h4>
                     <h4>{backEndPing}</h4>
                   </a>
