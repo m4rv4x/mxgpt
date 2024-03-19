@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>JavaScript Demo for JQuery Terminal Emulator</title>
+    <meta name="author" content="Jakub Jankiewicz - jcubic&#64;onet.pl"/>
+    <meta name="Description" content="Demonstration for JQuery Terminal Emulator using call automaticly JSON-RPC service (in php) with authentication."/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <script src="https://cdn.jsdelivr.net/combine/npm/jquery,npm/jquery.terminal/js/jquery.terminal.min.js,npm/jquery.terminal/js/xml_formatting.js,npm/js-polyfills/keyboard.js,npm/prismjs/prism.min.js,npm/jquery.terminal/js/prism.js,npm/jquery.splitter/js/jquery.splitter.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/combine/npm/terminal-prism/css/prism-coy.css,npm/jquery.terminal/css/jquery.terminal.min.css,npm/jquery.splitter/css/jquery.splitter.css" rel="stylesheet"/>
+  </head>
+  <body>
+
+  <script>
+   // ref: https://stackoverflow.com/q/67322922/387194
+   var __EVAL = (s) => eval(`void (__EVAL = ${__EVAL}); ${s}`);
+
+   const asciiLogo = 
+     '   ██  ██████  ████████ ███████ ██████  ███    ███ \n' +
+     '   ██ ██    ██    ██    ██      ██   ██ ████  ████ \n' +
+     '   ██ ██    ██    ██    █████   ██████  ██ ████ ██ \n' +
+     '   ██ ██    ██    ██    ██      ██  ██  ██  ██  ██  \n' +
+     '█████   ██████    ██    ███████ ██   ██ ██      ██ \n' +
+     '            ▀▀                                      \n';
+
+   function repr(object) {
+       if (object) {
+           if (object instanceof $.fn.init) {
+               return '#&lt;jQuery&gt;';
+           } else if (typeof object === 'object') {
+               var name = object.constructor.name;
+               if (name) {
+                   return `#&lt;${name}&gt;`;
+               } else {
+                   return object.toString();
+               }
+           } else {
+               return new String(object);
+           }
+       } else if (object === null) {
+           return 'null';
+       }
+   }
+   function repl(fn) {
+       return function(code) {
+           if (code !== '') {
+               try {
+                   var result = fn(code);
+                   if (result) {
+                       this.echo(repr(result));
+                   }
+               } catch(e) {
+                   this.error(new String(e));
+               }
+           }
+       };
+   }
+
+   var term = $('body').terminal(repl((code) => __EVAL(code)), {
+       greetings: asciiLogo,
+       prompt: 'js> '
+   });
+   $.terminal.syntax('javascript');
+
+   // Additional functions to imitate basic linux terminal
+   term.push({}, {
+       prompt: 'guest@jquery:~$ ',
+       name: 'linux',
+       greetings: 'Welcome to jQuery Linux Terminal!',
+       onInit: function(term) {
+           term.echo('Type "help" to see available commands.');
+       },
+       completion: ['help', 'echo', 'ls', 'cat', 'clear', 'date', 'uname', 'whoami', 'pwd', 'exit'],
+       onCommandChange: function(term, command) {
+           if (command === 'hack') {
+               term.error('Access denied');
+           }
+       },
+       onClear: function(term) {
+           term.echo('Type "help" to see available commands.');
+       },
+       onExit: function(term) {
+           term.echo('Goodbye!');
+       },
+       onEcho: function(term, message) {
+           term.echo(message);
+       },
+       onLs: function(term) {
+           term.echo('index.html  style.css  script.js');
+       },
+       onCat: function(term, file) {
+           if (file === 'index.html') {
+               term.echo('<!DOCTYPE HTML> ... </html>');
+           } else if (file === 'style.css') {
+               term.echo('/* CSS styles */');
+           } else if (file === 'script.js') {
+               term.echo('// JavaScript code');
+           } else {
+               term.error('File not found');
+           }
+       },
+       onDate: function(term) {
+           term.echo(new Date().toLocaleString());
+       },
+       onUname: function(term) {
+           term.echo('Linux');
+       },
+       onWhoami: function(term) {
+           term.echo('guest');
+       },
+       onPwd: function(term) {
+           term.echo('/home/guest');
+       },
+       onHack: function(term) {
+           term.error('Access denied');
+       }
+   });
+  </script>
+  <!-- Start Open Web Analytics Tracker 
+
+  <script type="text/javascript">
+  //<![CDATA[
+  var owa_baseUrl = 'https://stats.jcubic.pl/';
+  var owa_cmds = owa_cmds || [];
+  owa_cmds.push(['setSiteId', '9b6210e220f27093109ddf895e626f1a']);
+  owa_cmds.push(['trackPageView']);
+  owa_cmds.push(['trackClicks']);
+  (function() {
+      var _owa = document.createElement('script'); _owa.type = 'text/javascript'; _owa.async = true;
+      owa_baseUrl = ('https:' == document.location.protocol ? window.owa_baseSecUrl || owa_baseUrl.replace(/http:/, 'https:') : owa_baseUrl );
+      _owa.src = owa_baseUrl + 'modules/base/js/owa.tracker-combined-min.js';
+      var _owa_s = document.getElementsByTagName('script')[0]; _owa_s.parentNode.insertBefore(_owa, _owa_s);
+  }());
+  
+  //]]>
+  </script>
+  End Open Web Analytics Code -->
+</body>
+</html>
+
