@@ -1,0 +1,11 @@
+services:
+  mxgpt:
+    build: .
+    container_name: mxgpt
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
+    # Uncomment to use a local .env file:
+    # env_file: .env
