@@ -1,5 +1,9 @@
 # mxgpt
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/m4rv4x/mxgpt?style=social)](https://github.com/m4rv4x/mxgpt)
+[![Last Commit](https://img.shields.io/github/last-commit/m4rv4x/mxgpt)](https://github.com/m4rv4x/mxgpt)
+
 Self-hosted AI web chat for local or remote Ollama-style backends.
 
 ## Overview
@@ -8,57 +12,28 @@ Self-hosted AI web chat for local or remote Ollama-style backends.
 
 ## Highlights
 
-- Self-hosted chat interface
-- Ollama endpoint configurable through environment variables
-- Docker and `docker compose` ready
-- Fast local setup for experiments
+- **No external AI APIs required** — runs entirely against your own Ollama instance.
+- **Docker-first** — single `docker-compose up` to get going.
+- **Lightweight** — plain HTML/CSS/JS frontend, Express.js backend.
+- **Self-hosted** — your data stays on your machine.
 
-## Quick start
-
-### Docker
+## Quick Start
 
 ```bash
-docker compose up --build -d
+git clone https://github.com/m4rv4x/mxgpt.git
+cd mxgpt
+docker-compose up -d
 ```
 
-Default app URL:
+Then open `http://localhost:3000`.
 
-```text
-http://localhost:3000
-```
+## Stack
 
-### Local development
-
-```bash
-npm install
-npm start
-```
-
-If you also use the local Node entrypoint in this project:
-
-```bash
-node index.js
-```
-
-## Configuration
-
-Create a `.env` file from the example values below:
-
-```env
-OLLAMA_URL=http://localhost:11434
-PORT=3000
-```
-
-With Docker, the compose file defaults to:
-
-```env
-OLLAMA_URL=http://host.docker.internal:11434
-```
-
-## Project status
-
-This repository is an experimental self-hosted project. Expect iteration, cleanup, and documentation improvements over time.
+- **Frontend**: HTML, CSS, JavaScript
+- **Backend**: Node.js, Express
+- **AI**: Ollama API
+- **Deployment**: Docker, Docker Compose
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE) for details.
